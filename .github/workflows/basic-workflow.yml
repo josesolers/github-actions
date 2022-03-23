@@ -1,12 +1,18 @@
 name: example
 
 on: 
-  pull_request:
+  push:
 
 jobs:
 
-  test:
-    runs-on: ubuntu-20.04
+  build: 
+    runs-on: ${{matrix.os}} 
+    strategy: 
+      fail-fast: false
+      matrix: 
+        os: [ubuntu-20.04, macos-latest, windows-latest]
+        java: [ '8', '11', '17']
+    
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
